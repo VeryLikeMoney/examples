@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (QApplication, QFileIconProvider, QFileSystemModel,
 
 from PyQt5.QtGui import QStandardItemModel
 from delegete import TreeButtonDelegate
-from threed import Worker
+from thread import Worker
 
 class MyWindow(QMainWindow):
 
@@ -29,6 +29,7 @@ class MyWindow(QMainWindow):
                 layout.addWidget(self.line_edit)
                 layout.addWidget(self.tree)
 
+                # size setting
                 self.setCentralWidget(central_widget)
                 availableSize = QApplication.desktop().availableGeometry(self.tree).size()
                 self.resize(availableSize / 2)
@@ -73,6 +74,7 @@ class MyWindow(QMainWindow):
         def treeButtonClicked(self, index):
                 """ Обработка нажатия кнопки во втором стобце для подсчета размера папки"""
                 self.dir_path = self.model.filePath(index)
+                #Запуск другого потока
                 self.worker = Worker(self.dir_path)
                 self.worker.moveToThread(self.thread)
                 self.thread.started.connect(self.worker.run)

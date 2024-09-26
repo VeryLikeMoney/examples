@@ -16,10 +16,10 @@ class Worker(QObject):
 
     def dirSize(self, dirPath: str):
             """ Подсчет размера папки """
-            sizePath = 0
+            size_path = 0
             dir = QDir(dirPath)
             for file_path in dir.entryList(QDir.Files | QDir.Hidden):
-                    sizePath += QFileInfo(dir, file_path).size()
+                    size_path += QFileInfo(dir, file_path).size()
             for child_dir_path in dir.entryList(QDir.Dirs | QDir.NoDotAndDotDot | QDir.Hidden):
-                    sizePath += self.dirSize(dirPath + QDir.separator() + child_dir_path)
-            return sizePath
+                    size_path += self.dirSize(dirPath + QDir.separator() + child_dir_path)
+            return size_path
