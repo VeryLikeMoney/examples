@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import (QApplication, QFileIconProvider, QFileSystemModel,
         QTreeView, QLineEdit, QMainWindow, QVBoxLayout, QWidget)
 
 from PyQt5.QtGui import QStandardItemModel
-from delegete import TreeButtonDelegate
+from delegate import TreeButtonDelegate
 from thread import Worker
 
 class MyWindow(QMainWindow):
@@ -19,11 +19,8 @@ class MyWindow(QMainWindow):
                 self.line_edit = QLineEdit(self)
                 self.tree = QTreeView(self)
                 central_widget = QWidget(self)
-                self.item_model = QStandardItemModel()
 
                 self.line_edit.setPlaceholderText('Поиск')
-                self.item_model .setHorizontalHeaderLabels(['Name'])
-                self.tree.setModel(self.item_model)
                 layout = QVBoxLayout(central_widget)
 
                 layout.addWidget(self.line_edit)
@@ -103,9 +100,9 @@ class MyWindow(QMainWindow):
         def update_filter(self):
                 """ Добавление фильтра поиска"""
                 if self.line_edit.text():
-                        window.model.setNameFilters([f"*{self.line_edit.text()}*"])         
+                        self.model.setNameFilters([f"*{self.line_edit.text()}*"])         
                 else:
-                        window.model.setNameFilters(["*"])
+                        self.model.setNameFilters(["*"])
       
 app = QApplication(sys.argv)
 window = MyWindow()
